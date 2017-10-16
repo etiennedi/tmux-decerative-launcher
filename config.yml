@@ -2,6 +2,7 @@
 windows:
   sample-app:
     splits:
-      - command: 'which vim'
+      - command: 'echo "I am a command"'
         path: '~/go'
       - command: 'which vim'
+        path: '~/go'
