@@ -5,11 +5,12 @@
 
 Consider this project a small spike whether such a launcher is desirable. I will dogfood it heavily and then decide on whether this is the correct solution or not.
 
-Remember, a spike is dirty. This will be mostly some bash hacking with little to no tests. If I deem this project worthy after an initial test phase I might turn it into an actual project with real quality standards. I'd then rewrite it in Go, I assume.
+Remember, a spike is dirty. This will be mostly some bash hacking with little to no tests. If I deem this project worthy after an initial test phase I might turn it into an actual project with real quality standards.
 
 ### Tech Stack
 
-I want to give the bash yaml parser [yq](https://github.com/kislyuk/yq) a shot, so this is a bash only project for now.
+~I want to give the bash yaml parser [yq](https://github.com/kislyuk/yq) a shot, so this is a bash only project for now.~
+Parsing yaml files with `yq` turned out to be ok-ish. However, iterating over arrays was not much fun, so I switched to Golang after the very first commit or so. There are still no tests for now, though.
 
 ## Roadmap / Features
 
