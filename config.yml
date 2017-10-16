@@ -2,5 +2,6 @@
 windows:
   sample-app:
     splits:
-      - command: 'echo foo'
-      - command: 'echo bar'
+      - command: 'which vim'
+        path: '~/go'
+      - command: 'which vim'
