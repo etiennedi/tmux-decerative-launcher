@@ -13,8 +13,11 @@ I want to give the bash yaml parser [yq](https://github.com/kislyuk/yq) a shot, 
 
 ## Roadmap / Features
 
-* [ ] create window with splits based on yml config 
-* [ ] name window according to template
-* [ ] run command per pane 
+* [x] create window with splits based on yml config 
+* [x] name window according to template
+* [x] run command per pane 
 * [ ] specify size for splits
 * [ ] don't recreate window when window with name already exists
+
+## Known issues
+Right now we're splitting the split. So the more splits you add, they get exponentially smaller. Try with four instead of two.

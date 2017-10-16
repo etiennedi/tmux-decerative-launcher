@@ -6,3 +6,7 @@ windows:
         path: '~/go'
       - command: 'which vim'
         path: '~/go'
+      # - command: 'echo "I am a command"'
+      #   path: '~/go'
+      # - command: 'which vim'
+      #   path: '~/go'
