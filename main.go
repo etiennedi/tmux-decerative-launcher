@@ -41,6 +41,7 @@ func main() {
 type Pane struct {
 	Command string `yaml:"command"`
 	Path    string `yaml:"path"`
+	Height  *int   `yaml:"height"`
 }
 
 func (s Pane) NavigateToPath() error {
@@ -52,6 +53,19 @@ func (s Pane) NavigateToPath() error {
 	err := exec.Command("tmux", "send-keys", shellCommand, "Enter").Run()
 	if err != nil {
 		return fmt.Errorf("could not navigate to path '%s': %s", s.Path, err)
+	}
+
+	return nil
+}
+
+func (s Pane) SetHeight() error {
+	if s.Height == nil {
+		return nil
+	}
+
+	err := exec.Command("tmux", "resize-pane", "-y", fmt.Sprintf("%d", *s.Height)).Run()
+	if err != nil {
+		return fmt.Errorf("could not set pane height to '%d': %s", s.Height, err)
 	}
 
 	return nil
@@ -87,7 +101,12 @@ func (w *Window) CreatePanes() error {
 			}
 		}
 
-		err := pane.NavigateToPath()
+		err := pane.SetHeight()
+		if err != nil {
+			return err
+		}
+
+		err = pane.NavigateToPath()
 		if err != nil {
 			return err
 		}
