@@ -34,18 +34,18 @@ func main() {
 	err = exec.Command("tmux", "rename-window", windowName).Run()
 	FatalOn(err)
 
-	err = window.CreateSplits()
+	err = window.CreatePanes()
 	FatalOn(err)
 }
 
-type Split struct {
+type Pane struct {
 	Command string `yaml:"command"`
 	Path    string `yaml:"path"`
 }
 
-func (s Split) NavigateToPath() error {
+func (s Pane) NavigateToPath() error {
 	if s.Path == "" {
-		return errors.New("path in split must be set")
+		return errors.New("path in pane must be set")
 	}
 
 	shellCommand := fmt.Sprintf("cd %s", s.Path)
@@ -57,9 +57,9 @@ func (s Split) NavigateToPath() error {
 	return nil
 }
 
-func (s Split) RunCommand() error {
+func (s Pane) RunCommand() error {
 	if s.Command == "" {
-		return errors.New("command in split must be set")
+		return errors.New("command in pane must be set")
 	}
 
 	err := exec.Command("tmux", "send-keys", s.Command, "Enter").Run()
@@ -71,15 +71,15 @@ func (s Split) RunCommand() error {
 }
 
 type Window struct {
-	Splits []Split `yaml:"splits"`
+	Panes []Pane `yaml:"panes"`
 }
 
-func (w *Window) CreateSplits() error {
-	if len(w.Splits) == 0 {
-		return errors.New("No splits configured for this window")
+func (w *Window) CreatePanes() error {
+	if len(w.Panes) == 0 {
+		return errors.New("No panes configured for this window")
 	}
 
-	for i, split := range w.Splits {
+	for i, pane := range w.Panes {
 		if i != 0 {
 			err := exec.Command("tmux", "split-window", "-v").Run()
 			if err != nil {
@@ -87,12 +87,12 @@ func (w *Window) CreateSplits() error {
 			}
 		}
 
-		err := split.NavigateToPath()
+		err := pane.NavigateToPath()
 		if err != nil {
 			return err
 		}
 
-		err = split.RunCommand()
+		err = pane.RunCommand()
 		if err != nil {
 			return err
 		}
